@@ -1,0 +1,36 @@
+#include <iostream>
+
+int main()
+{
+    int a, b;
+    int const N = 5;
+    int arr[N];
+    
+    setlocale(LC_ALL, "Russian");
+
+    std::cout << "Введите элементы массива: ";
+    for (int i = 0; i < N; i++)
+    {   
+        std::cin >> arr[i];
+    }
+    std::cout << "Введите диапазон сжатия массива: ";
+    std::cin >> a >> b;
+
+    int tmp = 0;
+
+    for ( int i = 0; i < N; i++)
+    {
+        if (not (a <= arr[i] && arr[i] <= b))
+        {
+            if (i != tmp) arr[tmp] = arr[i];
+            tmp++;
+        }
+    }
+
+    for (int i = tmp; i < N; i++) arr[i] = 0;
+
+    for (int i = 0; i < N; i++) std::cout << arr[i] << ' ';
+    std::cout << std::endl;
+
+    return 0;
+}
