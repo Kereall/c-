@@ -1,0 +1,208 @@
+#include <iostream>
+#include <conio.h>
+#include <cstring>
+#include <windows.h>
+#include <string.h>
+
+using namespace std;
+
+
+
+void gotoxy(int x, int y)
+{
+	COORD p = { x,y };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), p);
+}
+/*общий сценарий : компьютер задает вопрос, вы отвечаете да или нет.
+в зависимости от содержимого базы компьютер предлагает вам или ответ - предположение(животное)
+или задает еще один вопрос.
+если предложенное животное верное - игра заканчивается(точнее вам предложат начать с начала).
+если неверное - компьютер предлагает вам придумать вопрос,
+который отличал бы ваше животное от предложенного,
+таким образом база пополняется и на место животного становится вопрос, ответом да будет ваше животное,
+а нет - предложенное компьютером.
+если вы отвечаете нет и там пусто - компьютер предлагает вам вписать ваше животное.
+так происходит до тех пор пока животное не будет угадано или пока вам не надоест.*/
+void rules()
+{
+	system("cls");
+	setlocale(LC_ALL, "Russian");
+	system("color 8F");
+	cout << "\n\tЗагадайте ваше животное (оно может быть любым из существующих или ранее существовавших) ";
+	cout << "\n\tОтветы принимаются ТОЛЬКО \"Yes\", \"YES\", \"y\", \"Y\", \"No\", \"NO\", \"n\", \"N\"" << endl;
+
+
+	system("pause");
+
+}
+void FinalQuestion()
+{
+	setlocale(LC_ALL, "Russian");
+	string reply;
+	cout << "Вы загадали '" << /* место в массиве с ответом <<*/ "' ?" << "\t";
+
+	cin >> reply;
+	if (reply == "yes" || reply == "YES" || reply == "Yes" || reply == "y" || reply == "Y")
+	{
+
+		cout << "\n\n\t\t\t\t\t      УРААА!!!!!" << endl;
+		cout << "\t\t\t\t\t      Спасибо за игру" << endl << "\n\nСыграем ещё?";
+		cin >> reply;
+		if (reply == "yes" || reply == "YES" || reply == "Yes" || reply == "y" || reply == "Y")
+		{
+			cout << "Нужно запустить с начала";
+		}
+		else if (reply == "no" || reply == "NO" || reply == "No" || reply == "n" || reply == "N")
+		{
+
+			cout << "Спасибо за игру, пока!" << endl;
+
+		}
+	else if (reply == "no" || reply == "NO" || reply == "No" || reply == "n" || reply == "N")
+		{
+			/*добавить новое животное и вопрос*/
+		}
+	else
+		{
+			cout << "Введите Yes или No" << endl;
+			FinalQuestion();
+		}
+	}
+}
+/*void question()
+{
+	setlocale(LC_ALL, "Russian");
+	string reply;
+	
+	if ( )
+	{
+		cout <<  << endl;
+		cin >> reply;
+		if (reply == "yes" || reply == "YES" || reply == "Yes" || reply == "y" || reply == "Y")
+			//
+		else if (reply == "no" || reply == "NO" || reply == "No" || reply == "n" || reply == "N")
+			//
+		else
+		{
+			cout << "Введите Yes или No" << endl;
+			question();
+		}
+}
+	
+	else
+	{
+		FinalQuestion();
+	}
+}*/
+
+void game()
+{
+	setlocale(LC_CTYPE, "Russian");
+	system("cls");
+	
+	char animal;
+	const int size = 1;
+	char arr[size];
+	string reply;
+	cout << "Ваше животное вымерло?";
+	cin >> reply;
+	if (reply == "yes" || reply == "YES" || reply == "Yes" || reply == "y" || reply == "Y")
+	{
+		FinalQuestion();
+	}
+	else if (reply == "no" || reply == "NO" || reply == "No" || reply == "n" || reply == "N")
+	{
+		// Функция ввода вопроса и животного в массив
+		for (int i = 0; i < size; i++)
+		{
+			cin >> arr[i];
+			//getParent = (i-1)/2
+			//getChildrenYES = i*2+1
+			//getChildrenNO = i*2+2
+			/*1. Вывести первый вопрос
+			* 2. Получить ответ да или нет
+			* 3. При да отправить финальный вопрос arr[i*2+1] == animal;
+			* 4. При нет пользователь пишет новое животное и вопрос -> конец игры или переход в начало
+			*/
+		}
+	}
+	
+	
+	
+	
+
+	
+	
+	
+	system("pause");
+}
+void author()
+{
+	system("cls");
+	cout << "Kirill Kiselev"<< endl;
+	system("pause");
+}
+
+void ShowMenu() 
+{
+	system("cls");
+	cout <<" New game" << endl;
+	cout << " Rules" << endl;
+	cout <<" Author" << endl;
+	cout <<" Exit" << endl;
+
+}
+
+
+
+int main() 
+{
+	system("cls");
+
+	const int NUM_MENU_ITEMS = 4;
+	int x = 0, y = 0;
+	int activeMenuItem = 0;
+	int ch = 0;
+	bool exit = false;
+
+	while (exit != true)
+	{
+		ShowMenu();
+
+		gotoxy(0, activeMenuItem);
+
+		ch = _getch();
+		if (ch == 224)
+			ch = _getch();
+
+		switch (ch)
+		{
+			case 27: exit = true; break;
+
+			case 72: activeMenuItem--; break;
+			case 80: activeMenuItem++; break;
+			case 13:
+				if (activeMenuItem == 0)
+				{
+					game();
+				}
+				else if (activeMenuItem == 1)
+				{
+					rules();
+				}
+				else if (activeMenuItem == 2)
+				{
+					author();
+				}
+				else if (activeMenuItem == 3)
+				{
+					exit = true;
+				}
+			break;
+		}
+
+		if (activeMenuItem < 0) activeMenuItem = 0;
+		if (activeMenuItem > NUM_MENU_ITEMS - 1) activeMenuItem = NUM_MENU_ITEMS - 1;
+	}
+
+}
