@@ -1,0 +1,111 @@
+#include <iostream>
+#include <conio.h>
+#include <cstring>
+#include <windows.h>
+#include <string.h>
+
+using namespace std;
+enum menu
+{
+	menu_game = 0,
+	menu_rules = 1,
+	menu_author= 2,
+	menu_exit = 3
+};
+enum button
+{
+	button_exit= 27,
+	button_up= 72,
+	button_down= 80,
+	button_enter= 13
+};
+void gotoxy(int x, int y)
+{
+	COORD p = { x,y };
+	
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), p);
+	
+}
+void rules()
+{
+	system("cls");
+	setlocale(LC_ALL, "Russian");
+	cout << "\n\tЗагадайте ваше животное (оно может быть любым из существующих или ранее существовавших) ";
+	cout << "\n\tОтветы принимаются ТОЛЬКО \"Yes\", \"YES\", \"y\", \"Y\", \"No\", \"NO\", \"n\", \"N\"" << endl;
+
+
+	system("pause");
+
+}
+void game()
+{
+	system("cls");
+	cout << "game";
+	system("pause");
+}
+void author()
+{
+	system("cls");
+	cout << "Kirill Kiselev" << endl;
+	system("pause");
+}
+void ShowMenu()
+{
+	system("cls");
+	cout << " New game" << endl;
+	cout << " Rules" << endl;
+	cout << " Author" << endl;
+	cout << " Exit" << endl;
+
+}
+int main()
+{
+	system("cls");
+
+	const int NUM_MENU_ITEMS = 4;
+	int x = 0, y = 0;
+	int activeMenuItem = 0;
+	int ch = 0;
+	bool exit = false;
+
+	while (exit != true)
+	{
+		ShowMenu();
+
+		gotoxy(0, activeMenuItem);
+
+		ch = _getch();
+		if (ch == 224)
+			ch = _getch();
+		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		switch (ch)
+		{
+		case button_exit: exit = true; break;
+
+		case button_up: activeMenuItem--; break;
+		case button_down: activeMenuItem++; break; 
+		case button_enter:
+			if (activeMenuItem == menu_game)
+			{
+				game();
+			}
+			else if (activeMenuItem == menu_rules)
+			{
+				rules();
+			}
+			else if (activeMenuItem == menu_author)
+			{
+				author();
+			}
+			else if (activeMenuItem == menu_exit)
+			{
+				exit = true;
+			}
+			break;
+		}
+
+		if (activeMenuItem < 0) activeMenuItem = 0;
+		if (activeMenuItem > NUM_MENU_ITEMS - 1) activeMenuItem = NUM_MENU_ITEMS - 1;
+	}
+
+}
