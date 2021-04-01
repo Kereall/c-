@@ -1,0 +1,60 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+int main()
+{	
+		
+	const int N = 100;
+	const int row = 100;
+	string answer,answer2;
+	char arr_strings[row][N] =
+	{
+		"It`s a fish?",
+		"Salmon ? "
+	};
+	
+	
+		for (int i = 0; i < row; i++)
+		{
+			cout << arr_strings[i];
+			cin >> answer;
+
+			start:
+			if (answer == "yes")
+			{
+
+				i = i * 2 + 1;
+				cout << arr_strings[i] << endl;
+				cin >> answer;
+			}
+			if (answer == "no")
+			{
+				i = i * 2 + 2;
+				if (strlen(arr_strings[i]) > 1)
+				{
+					cout << arr_strings[i] << endl;
+					cin >> answer;
+					goto start;
+				}
+				if (strlen(arr_strings[i]) < 1) {
+					cout << "Enter a question and animal " << endl;
+					cin >> arr_strings[i];
+					i = i * 2 + 1;
+					cin >> arr_strings[i];
+				}
+			}
+
+			cout << "Try again?";
+			cin >> answer2;
+			if (answer2 == "yes")
+			{
+				i = -1;
+			}
+			if (answer2 == "no") {
+				return 0;
+			}
+		
+	}
+	}
